@@ -23,6 +23,29 @@ DIRECTION_COMPLEMENT = {
     RIGHT: LEFT,
 }
 
+PIPES = {
+    (False, False, False, False): '╬',
+
+    (False, False, False, True):  '╣',
+    (False, False, True,  False): '╠',
+    (False, True,  False, False): '╩',
+    (True,  False, False, False): '╦',
+
+    (False, False, True,  True):  '║',
+    (False, True,  False, True):  '╝',
+    (False, True,  True,  False): '╚',
+    (True,  False, False, True):  '╗',
+    (True,  False, True,  False): '╔',
+    (True,  True,  False, False): '═',
+
+    (False, True,  True,  True):  '╹',
+    (True,  False, True,  True):  '╻',
+    (True,  True,  False, True):  '╸',
+    (True,  True,  True,  False): '╺',
+
+    (True,  True,  True,  True):  '╳',
+}
+
 # Utils
 def width(grid):
     return len(grid[0])
@@ -31,17 +54,21 @@ def height(grid):
     return len(grid)
 
 def pretty_print(grid):
-    print('#' * (width(grid) * 2 + 1))
-    for row in range(width(grid)):
-        line = grid[row]
-        if (row != 0):
-            print('#' + ''.join(
-                ['+-' if has_wall(cell, UP) else '+.' for cell in line]
-            )[1:] + '#')
-        print('#' + ''.join(
-            ['|.' if has_wall(cell, LEFT) else '..' for cell in line]
-        )[1:] + '#')
-    print('#' * (width(grid) * 2 + 1))
+    for line in grid:
+        print(''.join([PIPES[cell] for cell in line]))
+
+#def pretty_print(grid):
+#    print('#' * (width(grid) * 2 + 1))
+#    for row in range(width(grid)):
+#        line = grid[row]
+#        if (row != 0):
+#            print('#' + ''.join(
+#                ['+-' if has_wall(cell, UP) else '+.' for cell in line]
+#            )[1:] + '#')
+#        print('#' + ''.join(
+#            ['|.' if has_wall(cell, LEFT) else '..' for cell in line]
+#        )[1:] + '#')
+#    print('#' * (width(grid) * 2 + 1))
 
 def clone_grid(grid):
     return [list.copy(row) for row in grid]
